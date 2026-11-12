@@ -2520,3 +2520,105 @@ img, svg, video {
     }
 
 }
+
+
+/* =========================================
+   手機版導覽列修正
+========================================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background: #fff;
+}
+
+.nav-wrap {
+    position: relative;
+}
+
+/* 漢堡選單按鈕 */
+.menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #12345b;
+    background: #fff;
+    border: 1px solid #dce5ec;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 27px;
+    cursor: pointer;
+    z-index: 10001;
+    position: relative;
+}
+
+/* 手機和平板 */
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: inline-flex;
+    }
+
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+
+        width: 100%;
+        padding: 12px 20px 20px;
+
+        background: #fff;
+        box-shadow: 0 12px 24px rgba(0,0,0,.12);
+
+        z-index: 10000;
+    }
+
+    /* 點擊漢堡選單後顯示 */
+    .main-nav.is-open {
+        display: flex;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 14px 8px;
+        font-size: 14px;
+        color: #222 !important;
+        border-bottom: 1px solid #edf0f2;
+    }
+
+    .main-nav a strong {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .main-nav .nav-cta {
+        margin-top: 10px;
+        text-align: center;
+        color: white !important;
+    }
+
+    .main-nav #connectionBadge {
+        margin-top: 12px;
+    }
+}
+
+/* 桌機版 */
+@media (min-width: 769px) {
+
+    .menu-toggle {
+        display: none !important;
+    }
+
+    .main-nav {
+        display: flex !important;
+        flex-direction: row;
+        position: static;
+    }
+}
