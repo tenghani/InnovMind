@@ -75,7 +75,7 @@
         
         <a class="nav-cta" style="color: white;line-height:13px;font-size: 12px;;" href="#formCard"><span style="text-align: center;color:white">聯絡我們</span><br/><span style="color: white;">Contact Us</span></a>
          <!-- 前往後台管理清單 -->
-        <a href="index2.html" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
+        <a href="index2.html" class=" mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
           <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
           <span>後台管理清單</span>
         </a>
@@ -788,7 +788,93 @@ CREATE POLICY "允許公開新增" ON "public"."contact_messages" FOR INSERT TO 
         lucide.createIcons();
     }
 });
+// =========================================
+// 手機版漢堡選單控制
+// =========================================
 
+document.addEventListener('DOMContentLoaded', function () {
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (!menuToggle || !mainNav) return;
+
+    // 開啟 / 關閉選單
+    menuToggle.addEventListener('click', function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const isOpen = mainNav.classList.toggle('is-open');
+
+        // 更新按鈕狀態
+        menuToggle.setAttribute('aria-expanded', isOpen);
+
+        // 切換圖示
+        menuToggle.innerHTML = isOpen ? '✕' : '☰';
+
+        menuToggle.setAttribute(
+            'aria-label',
+            isOpen ? '關閉選單' : '開啟選單'
+        );
+
+    });
+
+    // 點擊導覽連結後自動關閉選單
+    mainNav.querySelectorAll('a').forEach(function (link) {
+
+        link.addEventListener('click', function () {
+
+            mainNav.classList.remove('is-open');
+
+            menuToggle.setAttribute('aria-expanded', 'false');
+
+            menuToggle.innerHTML = '☰';
+
+            menuToggle.setAttribute('aria-label', '開啟選單');
+
+        });
+
+    });
+
+    // 點擊選單以外的地方，自動關閉
+    document.addEventListener('click', function (e) {
+
+        if (
+            !mainNav.contains(e.target) &&
+            !menuToggle.contains(e.target)
+        ) {
+
+            mainNav.classList.remove('is-open');
+
+            menuToggle.setAttribute('aria-expanded', 'false');
+
+            menuToggle.innerHTML = '☰';
+
+            menuToggle.setAttribute('aria-label', '開啟選單');
+
+        }
+
+    });
+
+    // 按 ESC 關閉選單
+    document.addEventListener('keydown', function (e) {
+
+        if (e.key === 'Escape') {
+
+            mainNav.classList.remove('is-open');
+
+            menuToggle.setAttribute('aria-expanded', 'false');
+
+            menuToggle.innerHTML = '☰';
+
+            menuToggle.setAttribute('aria-label', '開啟選單');
+
+        }
+
+    });
+
+});
     // 頁面載入時初始化
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
