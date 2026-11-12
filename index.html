@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="創智科研生技以 AI 與經顱超音波技術，推動智慧腦血管影像與精準醫療創新。">
+  <title>創智科研生技 Innovative NeuroTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preload" as="image" href="./img/A2.jpg">
+  <link rel="preload" as="image" href="./img/B2.jpg">
+  <link rel="preload" as="image" href="./img/C1.jpg">
+  <link rel="preload" as="image" href="./img/D-1.jpg">
+  <link rel="preload" as="image" href="./img/E1-1.jpg">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase JS CDN (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+  <!-- 頂部導航列 -->
+  <!-- 
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+          <i data-lucide="message-square-plus" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight text-slate-900">RSystem</h1>
+          <p class="text-xs text-slate-500">線上聯絡與諮詢服務</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-3">
+       前往後台管理清單
+        <a href="index2.html" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
+          <span>後台管理清單</span>
+        </a>
+        <span id="connectionBadge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+          <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+          連線檢查中
+        </span>
+      </div>
+    </div>
+  </header>
+ -->
+
+  <header class="site-header">
+    <div class="nav-wrap container">
+      <a class="brand" href="#home" aria-label="創智科研生技首頁">
+        <img src="./img/A-LOGO.png" style="height: 40px;padding-left: 5px;" />
+        <!-- <span class="brand-mark">N</span>
+        <span class="brand-name"><strong>創智科研生技</strong><small>Innovative NeuroTech</small></span> -->
+      </a>
+      <button class="menu-toggle" aria-label="開啟選單" aria-expanded="false">☰</button>
+      <nav class="main-nav" aria-label="主要導覽">
+        <!-- <a class="active" style="color: black;" href="#home">首頁</a> -->
+         <a href="#contact" style="color: black;line-height:16px;"><strong>關於我們<br/><span>About Us</span></strong></a>
+        <a href="#about" style="color: black;line-height:16px;"><strong>企業願景<br/><span></span>Our Vision</span></strong></a>
+        <a href="#technology" style="color: black;line-height:16px;"><strong>核心發展方向<br/><span></span>Core Focus</span></strong></a>
+        <a href="#portfolio" style="color: black;line-height:16px;"><strong>我們的使命<br/><span></span>Our Mission</span></strong></a>
+        
+        <a class="nav-cta" style="color: white;line-height:13px;font-size: 12px;;" href="#formCard"><span style="text-align: center;color:white">聯絡我們</span><br/><span style="color: white;">Contact Us</span></a>
+         <!-- 前往後台管理清單 -->
+        <a href="index2.html" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
+          <span>後台管理清單</span>
+        </a>
+
+        <!-- 連線狀態 -->
+        <span id="connectionBadge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+          <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+          連線檢查中
+        </span>
+      </nav>
+    </div>
+  </header>
+
+   <main>
+    <section class="hero sectionA" id="home">
+      <div class="hero-grid"></div>
+      <div class="container hero-content">
+        <div class="hero-copy">
+       
+        </div>
+        <div class="hero-art" aria-label="腦部與超音波科技視覺">
+          
+          <div class="brain-visual"  style="padding-left:430px;padding-bottom: 90px;" >
+             <h1>智慧科技驅動醫療創新</h1>
+             <h2 style="color: white;line-height:56px;">&nbsp;&nbsp;Intelligent Technology for Better Healthcare</h1>
+          </div>
+          <div class="scan-beam"></div>
+        
+        </div>
+      </div>
+      <!-- <div class="hero-bottom-line"></div> -->
+    </section>
+
+    <section class="section sectionB" id="contact">
+      <div class="container">
+
+
+
+   
+
+    <div class="section-heading ">
+<div class="about-header ">
+    
+         <div class="brand-title">
+            <h2>關於我們</h2>
+            <p>About Us</p>
+        </div>
+ </div>
+
+     <!-- 主要內容 -->
+    <div class="content-wrapper" style="padding-top: 20px;">
+
+        <!-- 左側公司介紹 -->
+        <div class="intro" >
+
+            <p class="indent" style="color: black !important;">
+                創智科研生技公司（InnovMind Bioscience Co., Ltd.）
+                致力於智慧醫療技術的研發與臨床應用，
+                以臨床需求為核心，結合人工智慧（AI）、
+                生物醫學工程及創新科技，推動新一代智慧醫療檢查與診斷技術的發展。
+            </p>
+
+            <p class="indent" style="color: black !important;">
+                我們相信，科技的價值不僅在於提升生活便利性，
+                更在於改善醫療檢查方式、提升診斷效率，
+                並為醫療人員與病患創造更安全、精準且便利的醫療環境。
+            </p>
+
+            <p class="indent" style="color: black !important;">
+                透過跨領域研究、技術整合及產學醫合作，
+                致力於將創新科技轉化為具有臨床實用價值的智慧醫療解決方案。
+            </p>
+
+        </div>
+
+        <!-- 右側四大資訊卡 -->
+        <div class="card-grid">
+
+            <div class="info-card">
+                <div class="icon">✧</div>
+                <h3>Mission</h3>
+                <p>
+                    以創新科技，<br>
+                    改善醫療健康照護
+                </p>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">◎</div>
+                <h3>Vision</h3>
+                <p>
+                    成為全球領先的<br>
+                    智慧醫療平台
+                </p>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">▤</div>
+                <h3>Milestones</h3>
+                <p>
+                    持續突破技術<br>
+                    創新研發里程碑
+                </p>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">♧</div>
+                <h3>Team</h3>
+                <p>
+                    跨領域專業團隊<br>
+                    攜手同行
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+      </div>
+    </section>
+  <section class="section sectionC" id="about">
+    
+      <div class="container">
+
+
+
+   
+
+    <div class="section-heading ">
+<div class="about-header">
+   
+         <div class="brand-title">
+            <h2>企業願景</h2>
+            <p>Our Vision</p>
+        </div>
+ </div>
+
+     <!-- 主要內容 -->
+    <div class="content-wrapper" style="padding-top: 20px;">
+
+        <!-- 左側公司介紹 -->
+        <div class="intro" style="padding-left:100px;" >
+
+            <p class="indent" style="font-size:32px;padding-top: 20px;margin-left:1000px;font-weight: 500;color: #253885 !important;">
+                讓科技不僅便利生活，
+            </p>
+            
+            <p class="indent" style="font-size:32px;margin-left:100px;font-weight: 500; margin-top:-25px;color: #253885 !important;">
+               更能改善醫療、守護健康。
+            </p>
+
+            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;color: black !important;">
+                &nbsp;&nbsp;&nbsp;&nbsp;隨著人工智慧與科技持續發展，我們期望將先進技術
+            </p>
+	    <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
+		廣泛應用於醫療檢查、疾病診斷及臨床照護，突破傳統
+            </p>
+            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
+		醫療設備與檢查方式的限制，讓醫療服務朝向智慧化、
+            </p>
+            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
+		<span style="color:red;font-weight: 700;">精準化</span>、<span style="color:red;font-weight: 700;">非侵入化</span>及<span style="color:red;font-weight: 700;">便利化發展</span>。
+            </p>
+
+ <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;color: black !important;">
+                &nbsp;&nbsp;&nbsp;&nbsp;我們的願景是讓創新醫療科技從大型醫療機構延伸至
+            </p>
+	    <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
+		急診、加護病房、基層醫療及居家照護，使更優質的醫
+            </p>
+            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
+		療技術能夠服務更多需要的人。
+            </p>
+
+        </div>
+
+      <div class="sectionC-visual">
+
+                <img src="./img/C2.jpg"
+                     alt="AI智慧醫療與數位醫療科技">
+
+            </div>
+          
+        
+
+       
+    </div>
+
+
+      </div>
+    </section>
+
+
+  <section class="section sectionD" id="technology">
+      <div class="container">
+
+
+
+   
+
+    <div class="section-heading ">
+<div class="about-header ">
+    
+         <div class="brand-title">
+            <h2>核心發展方向</h2>
+            <p>Core Focus</p>
+        </div>
+ </div>
+
+     <!-- 四大核心發展方向 -->
+        <div class="sectionD-content" style="padding-top: 25px;">
+
+            <div class="content-grid">
+
+                <!-- 1 AI智慧醫療 -->
+                <div class="focus-item">
+
+                    <div class="focus-image">
+                        <img src="./img/D-2-1.jpg" alt="AI智慧醫療">
+                    </div>
+
+                    <div class="focus-text">
+                        <h2>AI 智慧醫療</h2>
+                        <p>
+                            整合人工智慧與醫學影像分析，
+                            研發智慧化輔助檢查及診斷技術。
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- 2 創新醫療設備 -->
+                <div class="focus-item">
+
+                    <div class="focus-image">
+                        <img src="./img/D-2-2.jpg" alt="創新醫療設備">
+                    </div>
+
+                    <div class="focus-text">
+                        <h2>創新醫療設備</h2>
+                        <p>
+                            開發便利、可攜式及非侵入性的
+                            醫療檢測設備，提升臨床應用效率。
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- 3 精準醫療技術 -->
+                <div class="focus-item">
+
+                    <div class="focus-image">
+                        <img src="./img/D-2-3.jpg" alt="精準醫療技術">
+                    </div>
+
+                    <div class="focus-text">
+                        <h2>精準醫療技術</h2>
+                        <p>
+                            結合生理訊號、超音波與智慧演算法，
+                            探索新型態的醫療檢測方法。
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- 4 產學醫跨域合作 -->
+                <div class="focus-item">
+
+                    <div class="focus-image">
+                        <img src="./img/D-2-4.jpg" alt="產學醫跨域合作">
+                    </div>
+
+                    <div class="focus-text">
+                        <h2>產學醫跨域合作</h2>
+                        <p>
+                            串聯臨床醫療、學術研究與科技產業，
+                            促進創新技術驗證及成果轉譯。
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+      </div>
+    </section>
+
+
+  <section class="section sectionE" id="portfolio">
+      <div class="container">
+
+
+
+   
+
+    <div class="section-heading ">
+<div class="about-header">
+    
+         <div class="brand-title">
+            <h2>我們的使命</h2>
+            <p>Our Mission</p>
+        </div>
+ </div>
+
+ 
+
+   <!-- ==============================
+             主要內容：使命介紹 + 主視覺
+        =============================== -->
+        <div class="sectionE-main">
+
+            <!-- 左側使命文字 -->
+            <div class="sectionE-description">
+
+                <p>
+                    以臨床需求為起點，以創新科技為動力，
+                    持續研發能夠改善醫療流程、提升診斷品質
+                    及增加醫療可近性的智慧醫療技術，
+                    讓科技創新真正落實於臨床照護。
+                </p>
+
+            </div>
+
+
+            <!-- 右側主視覺圖片 -->
+            <div class="sectionE-visual">
+
+                <img src="./img/E1-2.jpg"
+                     alt="AI智慧醫療與數位醫療科技">
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             底部品牌標語
+        =============================== -->
+        <div class="sectionE-slogan">
+
+            <h1>
+                科技讓生活更便利，創新讓醫療更精準。
+            </h1>
+
+            <p>
+                Innovation Beyond Technology,
+                Advancing Healthcare.
+            </p>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section contact-section1" id="formCard">
+    
+      <div class="container">
+   <!-- 未設定 Supabase Key 時的提示橫幅 -->
+    <div id="keyNotice" class="hidden mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-3">
+      <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0"></i>
+      <div class="text-sm">
+        <p class="font-semibold text-amber-800">尚未設定 Supabase 金鑰</p>
+        <p class="mt-0.5 text-amber-700">
+          請以文字編輯器打開本檔案 (<code class="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">index.html</code>)，找到下方 <code class="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">&lt;script&gt;</code> 區塊中的 <code class="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">SUPABASE_URL</code> 與 <code class="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">SUPABASE_ANON_KEY</code>。
+        </p>
+      </div>
+    </div>
+
+    <!-- 訊息提示通知 -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50 transition-all duration-300 transform translate-y-2 opacity-0"></div>
+
+        <div class="contact-panel1">
+       
+          <div class="contact-intro">
+            <span class="eyebrow">LET'S CONNECT</span><h2>聯絡我們</h2><h3>Contact Us</h3>
+            <p>與我們攜手，共同開創智慧醫療的未來。</p>
+            <div class="partnership"><b>技術合作</b><small>Technology Partnership</small><p>合作研發、醫療應用與 AI 技術交流，歡迎與我們聯繫。</p></div>
+          </div>
+          <form class="contact-form" id="contact-form">
+            <div>
+          <label for="name" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            您的姓名
+          </label>
+          <div class="relative">
+            
+            <input type="text" id="name" name="name" required placeholder="例：王小明">
+          </div>
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+              電子郵件 
+            </label>
+            <div class="relative">
+             
+              <input type="email" id="email" name="email" required placeholder="name@example.com">
+            </div>
+          </div>
+          <div>
+            <label for="phone" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+              聯絡電話
+            </label>
+            <div class="relative">
+              
+              <input type="tel" id="phone" name="phone" placeholder="0912-345-678" required>
+            </div>
+          </div>
+          <div>
+          <label for="subject" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            主旨 / 諮詢項目
+          </label>
+          <div class="relative">
+            
+            <input type="text" id="subject" name="subject" placeholder="例：專案合作諮詢、系統功能詢問" required>
+          </div>
+        </div>
+
+            <div>
+          <label for="message" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            訊息內容 
+          </label>
+          <textarea id="message" name="message" rows="5" required placeholder="請詳細描述您的需求或想諮詢的事項..."></textarea>
+        </div>
+
+        <!-- 錯誤警示提示區 (如 RLS 權限問題) -->
+        <div id="formErrorAlert" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs space-y-1.5">
+          <div class="flex items-center gap-1.5 font-semibold text-rose-800">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+            <span id="formErrorTitle">資料送出失敗</span>
+          </div>
+          <p id="formErrorMessage" class="text-rose-700 leading-relaxed"></p>
+        </div>
+
+        <!-- 提交按鈕 -->
+        <button class="button button-primary" type="submit" id="submitBtn">
+          <span>確認送出訊息</span>
+        </button>
+
+          </form>
+          <aside class="contact-info"><b>聯絡資訊</b><small>Contact Info</small><p>✉　info@neurotech.com</p><p>⌖　台灣・Taiwan</p><p>◷　週一至週五 09:00–18:00</p><div class="socials"><a href="#contact" aria-label="LinkedIn">in</a><a href="#contact" aria-label="YouTube">▶</a></div></aside>
+        </div>
+      </div>
+    </section>
+    <!-- 狀態二：送出成功畫面 (預設隱藏) -->
+   <section id="successCard" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-8 sm:p-12 text-center space-y-5">
+    
+      <div class="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+        <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">訊息已成功送出！</h2>
+        <p class="text-sm text-slate-500 mt-2 max-w-md mx-auto leading-relaxed">
+          非常感謝您的來信，我們已妥善收到您的聯絡資訊與訊息內容，將會儘速評估並與您聯繫。
+        </p>
+      </div>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button id="resetFormBtn"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 transition">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          <span>再送出一則訊息</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- 頁尾 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="#home" aria-label="創智科研生技首頁">
+        <img src="./img/F-LOGO-W.png" style="height: 45px;padding-left: 5px;" />
+      </a>
+      
+      <p style="color: white;">© 2026 InnovMind Bioscience Co., Ltd. All Rights Reserved.</p><a href="#home" style="color: white;">BACK TO TOP ↑</a></div>
+  </footer>
+
+
+  <!-- ============================================================== -->
+  <!-- 腳本邏輯與 Supabase 初始化設定 -->
+  <!-- ============================================================== -->
+  <script>
+    // ================================================================
+    // ⚠️【Supabase 專案金鑰】
+    // ================================================================
+    const SUPABASE_URL = 'https://binelivfgjrzxmrlpnuk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_LzafbyYoQIMraZWtZYpJHg_xa9yGgUk';
+
+  
+    // ================================================================
+
+    // DOM 元素引用
+    const contactForm = document.getElementById('contact-form');
+    const formCard = document.getElementById('formCard');
+    const successCard = document.getElementById('successCard');
+    const resetFormBtn = document.getElementById('resetFormBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const connectionBadge = document.getElementById('connectionBadge');
+    const keyNotice = document.getElementById('keyNotice');
+    const formErrorAlert = document.getElementById('formErrorAlert');
+    const formErrorTitle = document.getElementById('formErrorTitle');
+    const formErrorMessage = document.getElementById('formErrorMessage');
+
+    let supabaseClient = null;
+
+    // 清理 URL：自動去除結尾的 /rest/v1 或斜線
+    function getCleanSupabaseUrl(url) {
+      if (!url) return '';
+      return url.trim().replace(/\/rest\/v1\/?$/i, '').replace(/\/+$/, '');
+    }
+
+    // 檢查 Key 是否已替換
+    function isKeyConfigured() {
+      return (
+        SUPABASE_URL &&
+        SUPABASE_ANON_KEY &&
+        SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE' &&
+        SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE'
+      );
+    }
+
+    // 初始化 Supabase 客戶端
+    function initSupabase() {
+      if (!isKeyConfigured()) {
+        keyNotice.classList.remove('hidden');
+        connectionBadge.className = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200';
+        connectionBadge.innerHTML = '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-rose-500"></span>未配置金鑰';
+        return false;
+      }
+
+      try {
+        const cleanUrl = getCleanSupabaseUrl(SUPABASE_URL);
+        supabaseClient = window.supabase.createClient(cleanUrl, SUPABASE_ANON_KEY.trim());
+        keyNotice.classList.add('hidden');
+        connectionBadge.className = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200';
+        connectionBadge.innerHTML = '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span>系統在線';
+        return true;
+      } catch (err) {
+        console.error('Supabase 初始化失敗:', err);
+        showToast('Supabase 客戶端初始化失敗', 'error');
+        return false;
+      }
+    }
+
+    // 輕量 Toast 通知提示
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const isSuccess = type === 'success';
+      const bgColor = isSuccess ? 'bg-slate-900 text-white' : 'bg-rose-600 text-white';
+      const icon = isSuccess ? 'check-circle' : 'alert-circle';
+
+      toast.className = `fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg ${bgColor} text-sm font-medium transition-all duration-300 transform translate-y-0 opacity-100`;
+      toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4"></i><span>${message}</span>`;
+      toast.classList.remove('hidden');
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 3500);
+    }
+
+    // 處理表單提交 (新增至 Supabase)
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!supabaseClient) {
+        showToast('請先填入 Supabase URL 與 Key 才能送出資料', 'error');
+        return;
+      }
+
+      // 取得表單欄位
+      const formData = new FormData(contactForm);
+      const name = formData.get('name')?.trim();
+      const email = formData.get('email')?.trim();
+      const phone = formData.get('phone')?.trim() || null;
+      const subject = formData.get('subject')?.trim() || null;
+      const message = formData.get('message')?.trim();
+
+      if (!name || !email || !message) {
+        showToast('請填寫必填欄位 (姓名、Email、訊息內容)', 'error');
+        return;
+      }
+
+      // 按鈕載入狀態
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <i data-lucide="loader" class="w-4 h-4 animate-spin"></i>
+        <span>資料傳送中...</span>
+      `;
+      lucide.createIcons();
+
+      try {
+        const payload = {
+          name,
+          email,
+          phone,
+          subject,
+          message,
+          created_time: new Date().toISOString()
+        };
+
+        const { data, error } = await supabaseClient
+          .from('contact_messages')
+          .insert([payload])
+          .select();
+
+        if (error) throw error;
+
+        // 成功：隱藏表單，切換為成功感謝畫面
+        // if (formErrorAlert) formErrorAlert.classList.add('hidden');
+        // contactForm.reset();
+        // formCard.classList.add('hidden');
+        // successCard.classList.remove('hidden');
+        // lucide.createIcons();
+        // window.scrollTo({ top: 0, behavior: 'smooth' });
+    // ==========================================
+// Supabase 寫入成功：顯示感謝畫面
+// ==========================================
+
+// 隱藏錯誤提示
+if (formErrorAlert) {
+    formErrorAlert.classList.add('hidden');
+}
+
+// 清空表單
+contactForm.reset();
+
+// 隱藏聯絡表單
+formCard.classList.add('hidden');
+
+// 顯示成功畫面
+successCard.classList.remove('hidden');
+
+// 更新 Lucide 圖示
+if (window.lucide) {
+    lucide.createIcons();
+}
+
+// 滾動至成功訊息位置
+successCard.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+});
+
+console.log('資料成功寫入，感謝畫面已顯示');
+
+      } catch (err) {
+        console.error('新增資料失敗:', err);
+        const errMsg = err.message || JSON.stringify(err);
+        const isRLSError = errMsg.includes('row-level security') || err.code === '42501';
+
+        if (formErrorAlert) {
+          formErrorAlert.classList.remove('hidden');
+          if (isRLSError) {
+            formErrorTitle.innerText = 'Supabase 權限阻擋 (RLS 限制)';
+            formErrorMessage.innerHTML = `
+              您的資料表啟用了 <strong>Row Level Security (RLS)</strong>，但尚未開放訪客寫入權限。<br>
+              請至 Supabase 後台 <strong>SQL Editor</strong> 執行以下語法開放新增權限：<br>
+              <code class="block mt-1 p-2 bg-rose-100 rounded text-[11px] font-mono text-rose-950 select-all leading-relaxed">
+CREATE POLICY "允許公開新增" ON "public"."contact_messages" FOR INSERT TO public WITH CHECK (true);
+              </code>
+            `;
+          } else {
+            formErrorTitle.innerText = '送出失敗';
+            formErrorMessage.innerText = errMsg;
+          }
+          lucide.createIcons();
+        }
+
+        showToast(isRLSError ? '送出失敗：Supabase RLS 權限阻擋' : `送出失敗: ${errMsg}`, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>確認送出訊息</span>
+        `;
+        lucide.createIcons();
+      }
+    });
+
+    // 「再送出一則訊息」按鈕
+  resetFormBtn.addEventListener('click', () => {
+
+    // 隱藏成功畫面
+    successCard.classList.add('hidden');
+
+    // 顯示聯絡表單
+    formCard.classList.remove('hidden');
+
+    // 清除錯誤提示
+    if (formErrorAlert) {
+        formErrorAlert.classList.add('hidden');
+    }
+
+    // 滾動回聯絡表單
+    formCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+
+    // 更新圖示
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});
+
+    // 頁面載入時初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initSupabase();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSystem - 聯絡訊息管理清單 (後台)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase JS CDN (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800">
+
+  <!-- 頂部導航列 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl font-bold tracking-tight text-slate-900">RSystem</h1>
+            <span class="px-2 py-0.5 text-[10px] font-semibold bg-indigo-100 text-indigo-700 rounded-full uppercase tracking-wider">管理後台</span>
+          </div>
+          <p class="text-xs text-slate-500">聯絡訊息與諮詢紀錄管理清單</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-3">
+        <!-- 前台表單連結 -->
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span>前往前台留言頁</span>
+        </a>
+
+        <!-- 連線狀態徽章 -->
+        <span id="connectionBadge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+          <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+          連線檢查中
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- 頂部控制列：統計數字、搜尋篩選、重新載入 -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 mb-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        
+        <!-- 左側：標題與統計 -->
+        <div class="flex items-center space-x-3">
+          <div class="p-2.5 rounded-xl bg-indigo-50 text-indigo-600">
+            <i data-lucide="inbox" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">聯絡紀錄清單</h2>
+            <div class="flex items-center gap-2 mt-0.5">
+              <span id="recordCount" class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">
+                載入中...
+              </span>
+              <span class="text-xs text-slate-400 font-mono">table: contact_messages</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側：搜尋框與操作按鈕 -->
+        <div class="flex items-center gap-2.5 flex-1 sm:max-w-md">
+          <div class="relative flex-1">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <i data-lucide="search" class="w-4 h-4"></i>
+            </span>
+            <input type="text" id="searchInput" placeholder="搜尋姓名、Email、主旨或內容..."
+              class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+          </div>
+
+          <button id="refreshBtn" title="重新載入"
+            class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl transition border border-slate-200/80">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refreshIcon"></i>
+            <span class="hidden sm:inline">重新整理</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 訊息提示通知 -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50 transition-all duration-300 transform translate-y-2 opacity-0"></div>
+
+    <!-- 錯誤提示區域 -->
+    <div id="errorAlert" class="hidden mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-sm">
+      <div class="flex items-center gap-2 font-semibold">
+        <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600"></i>
+        <span id="errorTitle">讀取失敗</span>
+      </div>
+      <p id="errorMessage" class="text-xs text-rose-700 mt-1 font-mono"></p>
+    </div>
+
+    <!-- 訊息清單網格容器 -->
+    <div id="messagesContainer" class="space-y-4">
+      <!-- 動態載入卡片 -->
+    </div>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- 腳本邏輯與 Supabase 初始化設定 -->
+  <!-- ============================================================== -->
+  <script>
+    // ================================================================
+    // ⚠️【Supabase 專案金鑰】
+    // ================================================================
+    const SUPABASE_URL = 'https://binelivfgjrzxmrlpnuk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_LzafbyYoQIMraZWtZYpJHg_xa9yGgUk';
+    // ================================================================
+
+    const refreshBtn = document.getElementById('refreshBtn');
+    const refreshIcon = document.getElementById('refreshIcon');
+    const searchInput = document.getElementById('searchInput');
+    const messagesContainer = document.getElementById('messagesContainer');
+    const recordCount = document.getElementById('recordCount');
+    const connectionBadge = document.getElementById('connectionBadge');
+    const errorAlert = document.getElementById('errorAlert');
+    const errorTitle = document.getElementById('errorTitle');
+    const errorMessage = document.getElementById('errorMessage');
+
+    let supabaseClient = null;
+    let allMessages = []; // 本地快取全部資料，供即時關鍵字搜尋
+
+    // 清理 URL：自動去除結尾的 /rest/v1 或斜線
+    function getCleanSupabaseUrl(url) {
+      if (!url) return '';
+      return url.trim().replace(/\/rest\/v1\/?$/i, '').replace(/\/+$/, '');
+    }
+
+    // 初始化 Supabase
+    function initSupabase() {
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY || SUPABASE_URL.includes('YOUR_SUPABASE')) {
+        connectionBadge.className = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200';
+        connectionBadge.innerHTML = '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-rose-500"></span>未配置金鑰';
+        showError('未設定 Supabase 金鑰', '請在 index2.html 填入您的 SUPABASE_URL 與 SUPABASE_ANON_KEY。');
+        return false;
+      }
+
+      try {
+        const cleanUrl = getCleanSupabaseUrl(SUPABASE_URL);
+        supabaseClient = window.supabase.createClient(cleanUrl, SUPABASE_ANON_KEY.trim());
+        connectionBadge.className = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200';
+        connectionBadge.innerHTML = '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span>連線正常';
+        return true;
+      } catch (err) {
+        console.error('Supabase 初始化失敗:', err);
+        showError('Supabase 初始化失敗', err.message);
+        return false;
+      }
+    }
+
+    // 格式化日期時間
+    function formatDateTime(dateStr) {
+      if (!dateStr) return '無時間紀錄';
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleString('zh-TW', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch {
+        return dateStr;
+      }
+    }
+
+    // 顯示錯誤橫幅
+    function showError(title, msg) {
+      errorAlert.classList.remove('hidden');
+      errorTitle.innerText = title;
+      errorMessage.innerText = msg;
+      lucide.createIcons();
+    }
+
+    // 隱藏錯誤橫幅
+    function hideError() {
+      errorAlert.classList.add('hidden');
+    }
+
+    // 讀取 contact_messages 資料表清單
+    async function fetchMessages() {
+      if (!supabaseClient) return;
+
+      hideError();
+      refreshIcon.classList.add('animate-spin');
+      messagesContainer.innerHTML = `
+        <div class="text-center py-16 bg-white rounded-2xl border border-slate-200 text-slate-400">
+          <i data-lucide="loader" class="w-7 h-7 mx-auto animate-spin mb-2.5 text-indigo-500"></i>
+          <p class="text-sm">正在從 contact_messages 讀取最新聯絡紀錄...</p>
+        </div>
+      `;
+      lucide.createIcons();
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('contact_messages')
+          .select('id, name, email, phone, subject, message, created_time')
+          .order('created_time', { ascending: false });
+
+        if (error) throw error;
+
+        allMessages = data || [];
+        filterAndRenderMessages();
+      } catch (err) {
+        console.error('讀取資料錯誤:', err);
+        const isRLSError = err.message?.includes('row-level security') || err.code === '42501';
+        
+        let hint = err.message;
+        if (isRLSError) {
+          hint = 'Supabase RLS 權限阻擋：請至 Supabase SQL Editor 執行：CREATE POLICY "允許公開讀取" ON "public"."contact_messages" FOR SELECT TO public USING (true);';
+        }
+
+        showError('讀取資料表失敗', hint);
+        messagesContainer.innerHTML = `
+          <div class="p-8 text-center bg-white rounded-2xl border border-rose-200">
+            <i data-lucide="shield-alert" class="w-10 h-10 text-rose-500 mx-auto mb-2"></i>
+            <h3 class="text-base font-semibold text-slate-800">資料讀取被拒絕</h3>
+            <p class="text-xs text-rose-600 mt-1 max-w-md mx-auto">${hint}</p>
+          </div>
+        `;
+        recordCount.innerText = '讀取失敗';
+      } finally {
+        refreshIcon.classList.remove('animate-spin');
+        lucide.createIcons();
+      }
+    }
+
+    // 依關鍵字篩選並渲染卡片
+    function filterAndRenderMessages() {
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      const filtered = allMessages.filter(item => {
+        if (!keyword) return true;
+        return (
+          (item.name && item.name.toLowerCase().includes(keyword)) ||
+          (item.email && item.email.toLowerCase().includes(keyword)) ||
+          (item.phone && item.phone.toLowerCase().includes(keyword)) ||
+          (item.subject && item.subject.toLowerCase().includes(keyword)) ||
+          (item.message && item.message.toLowerCase().includes(keyword))
+        );
+      });
+
+      recordCount.innerText = keyword 
+        ? `篩選出 ${filtered.length} / 共 ${allMessages.length} 筆` 
+        : `共 ${allMessages.length} 筆資料`;
+
+      if (filtered.length === 0) {
+        messagesContainer.innerHTML = `
+          <div class="text-center py-20 px-4 bg-white rounded-2xl border-2 border-dashed border-slate-200">
+            <i data-lucide="${keyword ? 'search-x' : 'inbox'}" class="w-12 h-12 mx-auto text-slate-300 mb-3"></i>
+            <h3 class="text-sm font-semibold text-slate-700">
+              ${keyword ? '沒有符合關鍵字的紀錄' : '目前尚無任何聯絡訊息'}
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">
+              ${keyword ? '請嘗試更換搜尋關鍵字' : '當有訪客在 index.html 填寫表單後，將會即時列在此處。'}
+            </p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      messagesContainer.innerHTML = filtered.map((msg, index) => `
+        <div class="bg-white rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-md transition duration-200 p-5 sm:p-6 space-y-4">
+          
+          <!-- 頂部：姓名、主旨與時間 -->
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-3 border-b border-slate-100">
+            <div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs">
+                  #${allMessages.length - (allMessages.indexOf(msg))}
+                </span>
+                <h3 class="text-base font-bold text-slate-900">${escapeHtml(msg.name || '未填寫姓名')}</h3>
+                ${msg.subject ? `
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                    ${escapeHtml(msg.subject)}
+                  </span>
+                ` : ''}
+              </div>
+
+              <!-- 聯絡方式 -->
+              <div class="flex items-center gap-4 text-xs text-slate-600 mt-2 flex-wrap">
+                ${msg.email ? `
+                  <a href="mailto:${escapeHtml(msg.email)}" class="inline-flex items-center gap-1.5 hover:text-indigo-600 transition">
+                    <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span>${escapeHtml(msg.email)}</span>
+                  </a>
+                ` : ''}
+
+                ${msg.phone ? `
+                  <a href="tel:${escapeHtml(msg.phone)}" class="inline-flex items-center gap-1.5 hover:text-indigo-600 transition">
+                    <i data-lucide="phone" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span>${escapeHtml(msg.phone)}</span>
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- 時間標籤 -->
+            <div class="flex items-center gap-1 text-xs text-slate-400 bg-slate-50 px-2.5 py-1 rounded-lg self-start">
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+              <span>${formatDateTime(msg.created_time)}</span>
+            </div>
+          </div>
+
+          <!-- 訊息內容主體 -->
+          <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-100 text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">
+            ${escapeHtml(msg.message || '')}
+          </div>
+
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // HTML 跳脫防 XSS
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // 搜尋即時篩選
+    searchInput.addEventListener('input', () => {
+      filterAndRenderMessages();
+    });
+
+    // 重新整理按鈕
+    refreshBtn.addEventListener('click', () => {
+      fetchMessages();
+    });
+
+    // 頁面載入時初始化並讀取
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      const ready = initSupabase();
+      if (ready) {
+        fetchMessages();
+      }
+    });
+  </script>
+</body>
+</html>
