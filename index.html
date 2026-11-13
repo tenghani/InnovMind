@@ -7,12 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="preload" as="image" href="./img/A2.jpg">
-  <link rel="preload" as="image" href="./img/B2.jpg">
-  <link rel="preload" as="image" href="./img/C1.jpg">
-  <link rel="preload" as="image" href="./img/D-1.jpg">
-  <link rel="preload" as="image" href="./img/E1-1.jpg">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase JS CDN (v2) -->
@@ -22,12 +16,491 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+ 
+    :root{--navy:#0b3972;--blue:#1263a5;--cyan:#25b8d5;--ink:#152b45;--muted:#607286;--pale:#edf6fb;--line:#dce8f1;--white:#fff;--max:1160px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:"Noto Sans TC","DM Sans",sans-serif;line-height:1.75;background:#fff}a{color:inherit;text-decoration:none}.container{width:min(var(--max),calc(100% - 48px));margin:auto}.eyebrow{font:700 11px/1.4 "DM Sans",sans-serif;letter-spacing:.2em;color:var(--blue);text-transform:uppercase}.section-title{font-size:clamp(20.8px,2.4vw,28.8px);line-height:1.35;margin:8px 0 12px;font-weight:800;letter-spacing:.02em}.section-sub{font:500 12px "DM Sans",sans-serif;color:#8090a0;letter-spacing:.08em}.section-head{margin-bottom:44px}.section-head.center{text-align:center}
+    header{height:78px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(11,57,114,.08)}.nav{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px}.brand-mark{width:42px;height:42px;border:2px solid var(--blue);border-radius:50%;display:grid;place-items:center;color:var(--blue);font:700 16px "DM Sans";position:relative}.brand-mark:after{content:"";position:absolute;inset:4px;border:1px solid #63c9dd;border-radius:50%}.brand-name{font-weight:800;font-size:15px;line-height:1.3;color:var(--navy)}.brand-name small{display:block;font:500 9px "DM Sans";letter-spacing:.05em;color:#71849a}.nav-links{display:flex;align-items:center;gap:28px;font-size:12px;font-weight:600;color:#344d67}.nav-links a{transition:.2s}.nav-links a:hover{color:var(--cyan)}.nav-links .contact-link{background:var(--blue);color:white;padding:10px 17px;border-radius:24px}.menu-btn{display:none;border:0;background:none;font-size:25px;color:var(--navy)}
+    .hero{min-height:480px;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 22% 45%,#17638a 0,#0b345e 28%,transparent 54%),linear-gradient(110deg,#071d36 0%,#0a4779 52%,#155b9d 100%);color:#fff}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,20,39,.08),rgba(4,28,54,.12)),url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1800&q=85') center/cover;opacity:.23;mix-blend-mode:screen}.hero:after{content:"";position:absolute;width:600px;height:600px;border:1px solid rgba(115,220,255,.22);border-radius:50%;left:-130px;top:-80px;box-shadow:0 0 0 35px rgba(115,220,255,.035),0 0 0 90px rgba(115,220,255,.025),0 0 80px rgba(38,190,225,.2)}.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:50px;padding:76px 0}.hero-art{height:310px;position:relative;display:grid;place-items:center}.orb{width:270px;height:270px;border-radius:50%;border:1px solid rgba(168,232,255,.8);background:radial-gradient(circle at 38% 35%,rgba(255,255,255,.5),rgba(83,181,223,.1) 38%,rgba(6,42,78,.2) 68%);box-shadow:inset 0 0 40px rgba(140,225,255,.25),0 0 55px rgba(58,193,238,.28);position:relative}.orb:before,.orb:after{content:"";position:absolute;border:1px solid rgba(151,225,255,.55);border-radius:50%;inset:20px 42px;transform:rotate(38deg)}.orb:after{inset:45px 15px;transform:rotate(-42deg)}.orb-core{position:absolute;inset:0;display:grid;place-items:center;font-size:90px;color:rgba(229,249,255,.85);text-shadow:0 0 24px #8beaff}.orbit{position:absolute;width:370px;height:150px;border:1px solid rgba(85,211,246,.5);border-radius:50%;transform:rotate(-28deg)}.orbit.two{transform:rotate(42deg);width:330px;height:190px;border-color:rgba(240,203,112,.48)}.spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#a9f3ff;box-shadow:0 0 15px 5px rgba(87,216,255,.65)}.spark.s1{top:22%;left:27%}.spark.s2{right:16%;top:35%;background:#f6d58b}.spark.s3{bottom:16%;left:38%}.hero-copy .eyebrow{color:#8fe9ff}.hero h1{font-size:clamp(31px,4vw,48px);line-height:1.35;margin:15px 0 12px;font-weight:800;letter-spacing:.03em}.hero-en{font:500 clamp(14px,1.5vw,18px) "DM Sans";letter-spacing:.02em;color:#d5eaf8}.hero-desc{max-width:490px;color:#c4d9e9;font-size:14px;margin:24px 0 30px}.hero-cta{margin-top:28px;display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--navy);border-radius:28px;padding:12px 22px;font-size:12px;font-weight:700;transition:.2s}.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px #001d3b66}.hero-cta span{font-size:17px}
+    section{padding:100px 0}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:90px;align-items:center}.copy p{font-size:14px;color:#53677b;margin:0 0 16px}.principles{display:grid;grid-template-columns:1fr 1fr;gap:14px}.principle{min-height:142px;padding:23px 20px;background:var(--navy);border-radius:13px;color:white;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 12px 28px rgba(11,57,114,.12)}.principle .symbol{font-size:24px;color:#70dff1}.principle b{font-size:15px}.principle small{font:11px "DM Sans";color:#a9c8e1;letter-spacing:.08em}
+    .vision{background:#f5f9fc}.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.vision-visual{min-height:320px;border-radius:5px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(7,44,82,.1),rgba(8,84,139,.35)),url('./img/vision.jpg') center/cover}.vision-visual:after{content:"AI  ×  MEDICAL";position:absolute;right:22px;bottom:20px;color:white;font:600 12px "DM Sans";letter-spacing:.18em;text-shadow:0 2px 8px #001a35}.vision-quote{font-size:clamp(25px,3vw,35px);font-weight:800;line-height:1.55;color:var(--navy);margin:0 0 24px}.vision-quote em{font-style:normal;color:#1595bd}.vision-copy p{font-size:14px;color:#53677b}
+    .focus-cards{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px}.focus-card{display:grid;grid-template-columns:42% 1fr;gap:20px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:14px;transition:.25s;background:white}.focus-card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(19,71,112,.1);border-color:#b6d8e8}.focus-img{height:155px;border-radius:9px;overflow:hidden;background:linear-gradient(135deg,#0b3972,#1a9cba);position:relative}.focus-img img{width:100%;height:100%;object-fit:cover;display:block;opacity:.86}.focus-img:after{content:"";position:absolute;inset:0;}.focus-card h3{font-size:17px;color:#0875a9;margin:0 0 8px}.focus-card p{font-size:12px;color:#5b6d7f;margin:0;line-height:1.8}.focus-no{font:600 10px "DM Sans";letter-spacing:.15em;color:#8fa7ba;margin-bottom:5px;display:block}
+    .mission{background:linear-gradient(120deg,#f2f8fc,#fff)}.mission-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:65px;align-items:center}.mission-visual{height:300px;border-radius:8px;overflow:hidden;background:linear-gradient(90deg,rgba(5,38,71,.1),rgba(5,38,71,.05)),url('./img/mission.jpg') center/cover}.mission-line{font:500 19px "DM Sans";letter-spacing:.04em;color:var(--navy);margin-top:32px}
+    .contact{background:radial-gradient(circle at 90% 15%,#1766a2 0,transparent 34%),linear-gradient(120deg,#082f61,#0c4a86);color:white;padding:82px 0}.contact-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;align-items:start}.contact .eyebrow{color:#73dff2}.contact h2{font-size:30px;margin:8px 0}.contact p{font-size:13px;color:#c2d9eb}.contact-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#c7dcec}.field input,.field select,.field textarea{width:100%;border:1px solid rgba(194,225,245,.32);background:rgba(255,255,255,.08);border-radius:5px;padding:12px 13px;color:white;font:13px "Noto Sans TC",sans-serif;outline:none}.field input::placeholder,.field textarea::placeholder{color:#a9c2d6}.field select option{color:#17324c}.field textarea{min-height:105px;resize:vertical}.submit{grid-column:1/-1;justify-self:start;border:0;border-radius:25px;background:#3bc0dc;color:#07335c;padding:12px 25px;font:700 12px "Noto Sans TC";cursor:pointer}.form-note{grid-column:1/-1;font-size:11px;color:#a9c8df;min-height:20px}.form-note a{text-decoration:underline}footer{background:#06274e;color:#d4e7f5;padding:22px 0}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}.footer-brand{font-weight:700;font-size:14px}.footer-brand small{display:block;font:10px "DM Sans";color:#8eacc6}.copyright{font:10px "DM Sans";color:#8eacc6}
+    @media(max-width:800px){.nav-links{gap:15px}.hero-inner{gap:20px}.hero-art{transform:scale(.82)}.about-grid,.vision-grid,.mission-grid,.contact-grid{gap:38px}.focus-card{grid-template-columns:1fr}.focus-img{height:170px}}
+    @media(max-width:620px){.container{width:min(100% - 36px,var(--max))}header{height:68px}.menu-btn{display:block}.nav-links{display:none;position:absolute;top:68px;left:0;right:0;padding:18px;background:white;box-shadow:0 12px 18px #092c4a18;flex-direction:column;align-items:stretch;gap:0}.nav-links.open{display:flex}.nav-links a{padding:12px 8px}.nav-links .contact-link{text-align:center;margin-top:8px}.hero{min-height:0}.hero-inner{grid-template-columns:1fr;padding:58px 0 64px;gap:0}.hero-art{height:220px;grid-row:2;transform:scale(.7);margin-top:-8px}.hero-copy{grid-row:1}.hero h1{font-size:32px}.hero-desc{font-size:13px}.section-head{margin-bottom:28px}section{padding:70px 0}.about-grid,.vision-grid,.mission-grid,.contact-grid{grid-template-columns:1fr;gap:30px}.principle{min-height:125px}.vision-visual{min-height:230px;grid-row:1}.focus-cards{grid-template-columns:1fr;gap:14px}.focus-card{grid-template-columns:38% 1fr}.focus-img{height:130px}.focus-card h3{font-size:15px}.mission-visual{height:220px}.contact-form{grid-template-columns:1fr}.field.full,.submit,.form-note{grid-column:1}.footer-inner{align-items:flex-start;flex-direction:column;gap:8px}}
+
+    /* Homepage hero image replacement */
+    .hero{
+      min-height:420px;
+      background:#061b30 url('./img/hero-main.jpg') center/cover no-repeat;
     }
+    .hero:before{
+      background:linear-gradient(90deg,rgba(3,16,30,.03) 0%,rgba(3,16,30,.12) 42%,rgba(3,20,38,.76) 100%);
+      opacity:1;
+      mix-blend-mode:normal;
+    }
+    .hero:after{display:none}
+    .hero-inner{grid-template-columns:1fr;gap:0}
+    .hero-art{display:none}
+    .hero-copy{width:min(560px,52%);margin-left:auto}
+    @media(max-width:620px){
+      .hero{min-height:0;background-position:43% center}
+      .hero:before{background:linear-gradient(180deg,rgba(3,16,30,.08),rgba(3,20,38,.72))}
+      .hero-inner{padding:70px 0 64px}
+      .hero-copy{width:100%;margin:0;text-align:center}
+      .hero-desc{margin-left:auto;margin-right:auto}
+    }
+
+
+    /* Official InnovMind logo */
+    .brand{gap:0;flex:0 0 auto}
+    .brand-logo{display:block;width:286px;max-width:100%;height:auto;max-height:58px;object-fit:contain;object-position:left center}
+    .brand-mark,.brand-name{display:none}
+    .footer-brand{display:flex;align-items:center}
+    .footer-logo{display:block;width:230px;max-width:100%;height:auto;max-height:48px;object-fit:contain}
+    @media(max-width:800px){.brand-logo{width:248px;max-height:54px}}
+    @media(max-width:620px){.brand-logo{width:210px;max-height:48px}.footer-logo{width:190px}}
+  
+
+    /* =========================================================
+       RWD 強化：平板、手機與小尺寸裝置
+       保留原桌機視覺，僅覆寫較小尺寸的版面配置
+    ========================================================= */
+    html {
+      scroll-padding-top: 82px;
+    }
+
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    header {
+      z-index: 1000;
+    }
+
+    .nav {
+      min-width: 0;
+    }
+
+    .menu-btn {
+      position: relative;
+      z-index: 1002;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-links {
+      min-width: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        width: min(100% - 40px, var(--max));
+      }
+
+      .nav-links {
+        gap: 16px;
+        font-size: 11px;
+      }
+
+      .brand-logo {
+        width: 230px;
+      }
+
+      .about-grid {
+        gap: 45px;
+      }
+
+      .vision-grid,
+      .mission-grid,
+      .contact-grid {
+        gap: 42px;
+      }
+
+      .focus-card {
+        gap: 14px;
+      }
+    }
+
+    /* 平板以下改用漢堡選單，避免導覽項目擠在同一列 */
+    @media (max-width: 768px) {
+      html {
+        scroll-padding-top: 72px;
+      }
+
+      header {
+        height: 68px;
+      }
+
+      .nav {
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .brand-logo {
+        width: 220px;
+        max-height: 50px;
+      }
+
+      .menu-btn {
+        display: inline-flex;
+        flex: 0 0 44px;
+        font-size: 27px;
+        line-height: 1;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: calc(100dvh - 68px);
+        overflow-y: auto;
+        padding: 12px 20px 18px;
+        background: #fff;
+        border-top: 1px solid rgba(11, 57, 114, .08);
+        box-shadow: 0 12px 22px rgba(9, 44, 74, .16);
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 2px;
+        z-index: 1001;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 12px 10px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 8px;
+      }
+
+      .nav-links a:hover {
+        background: #f0f7fb;
+      }
+
+      .nav-links .contact-link {
+        margin-top: 6px;
+        text-align: center;
+      }
+
+      #connectionBadge {
+        align-self: flex-start;
+        margin: 8px 0 0 8px;
+      }
+
+      .hero {
+        min-height: 0;
+        background-position: center;
+      }
+
+      .hero-inner {
+        min-height: 390px;
+        grid-template-columns: 1fr;
+        padding: 64px 0;
+      }
+
+      .hero-copy {
+        width: min(100%, 560px);
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .about-grid,
+      .vision-grid,
+      .mission-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .principles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .vision-visual {
+        min-height: 260px;
+      }
+
+      .focus-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .focus-card {
+        grid-template-columns: minmax(120px, 38%) minmax(0, 1fr);
+      }
+
+      .focus-img {
+        height: 150px;
+      }
+
+      .mission-visual {
+        height: 250px;
+      }
+
+      .contact-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-inner {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: calc(100% - 32px);
+      }
+
+      header {
+        height: 64px;
+      }
+
+      html {
+        scroll-padding-top: 68px;
+      }
+
+      .brand-logo {
+        width: min(210px, calc(100vw - 100px));
+        max-height: 46px;
+      }
+
+      .nav-links {
+        max-height: calc(100dvh - 64px);
+        padding: 10px 16px 16px;
+      }
+
+      section {
+        padding: 56px 0;
+      }
+
+      .hero-inner {
+        min-height: 350px;
+        padding: 56px 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(27px, 8vw, 34px);
+        line-height: 1.4;
+      }
+
+      .hero-en {
+        font-size: 13px;
+      }
+
+      .hero-desc {
+        font-size: 13px;
+        line-height: 1.9;
+      }
+
+      .section-head {
+        margin-bottom: 24px;
+      }
+
+      .section-title {
+        font-size: 23px;
+      }
+
+      .principles {
+        gap: 10px;
+      }
+
+      .principle {
+        min-height: 118px;
+        padding: 17px 14px;
+      }
+
+      .principle b {
+        font-size: 14px;
+      }
+
+      .principle small {
+        font-size: 9px;
+      }
+
+      .vision-quote {
+        font-size: 24px;
+        line-height: 1.55;
+      }
+
+      .vision-visual {
+        min-height: 210px;
+      }
+
+      .focus-card {
+        grid-template-columns: 112px minmax(0, 1fr);
+        gap: 12px;
+        padding: 10px;
+      }
+
+      .focus-img {
+        height: 116px;
+      }
+
+      .focus-card h3 {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .focus-card p {
+        font-size: 11px;
+        line-height: 1.7;
+      }
+
+      .focus-no {
+        font-size: 9px;
+      }
+
+      .mission-visual {
+        height: 205px;
+      }
+
+      .mission-line {
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .contact {
+        padding: 58px 0;
+      }
+
+      .contact h2 {
+        font-size: 26px;
+      }
+
+      .contact-form {
+        grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .field,
+      .field.full,
+      .submit,
+      .form-note {
+        grid-column: 1;
+        min-width: 0;
+      }
+
+      .submit {
+        width: 100%;
+        justify-self: stretch;
+      }
+
+      .footer-inner {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+
+      .footer-brand {
+        justify-content: center;
+      }
+
+      .copyright {
+        font-size: 9px;
+        line-height: 1.6;
+      }
+
+      #toast {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        width: calc(100% - 24px);
+      }
+
+      .focus-card {
+        grid-template-columns: 96px minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .focus-img {
+        height: 108px;
+      }
+
+      .focus-card p {
+        font-size: 10px;
+      }
+    }
+
+    /* 減少動態效果偏好 */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+/* 手機版文字左右留白 */
+@media (max-width: 768px) {
+    .container {
+        width: calc(100% - 48px);
+    }
+
+    .copy p,
+    .vision-copy p {
+        padding-left: 2px;
+        padding-right: 2px;
+        line-height: 1.95;
+    }
+}
+
+/* 小尺寸手機 */
+@media (max-width: 480px) {
+    .container {
+        width: calc(100% - 44px);
+    }
+
+    .section-title,
+    .vision-quote,
+    .contact h2 {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .focus-card {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
   </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+<body>
 
   <!-- 頂部導航列 -->
   <!-- 
@@ -57,388 +530,40 @@
     </div>
   </header>
  -->
-
-  <header class="site-header">
-    <div class="nav-wrap container">
-      <a class="brand" href="#home" aria-label="創智科研生技首頁">
-        <img src="./img/A-LOGO.png" style="height: 40px;padding-left: 5px;" />
-        <!-- <span class="brand-mark">N</span>
-        <span class="brand-name"><strong>創智科研生技</strong><small>Innovative NeuroTech</small></span> -->
-      </a>
-      <button class="menu-toggle" aria-label="開啟選單" aria-expanded="false">☰</button>
-      <nav class="main-nav" aria-label="主要導覽">
-        <!-- <a class="active" style="color: black;" href="#home">首頁</a> -->
-         <a href="#contact" style="color: black;line-height:16px;"><strong>關於我們<br/><span>About Us</span></strong></a>
-        <a href="#about" style="color: black;line-height:16px;"><strong>企業願景<br/><span></span>Our Vision</span></strong></a>
-        <a href="#technology" style="color: black;line-height:16px;"><strong>核心發展方向<br/><span></span>Core Focus</span></strong></a>
-        <a href="#portfolio" style="color: black;line-height:16px;"><strong>我們的使命<br/><span></span>Our Mission</span></strong></a>
-        
-        <a class="nav-cta" style="color: white;line-height:13px;font-size: 12px;;" href="#formCard"><span style="text-align: center;color:white">聯絡我們</span><br/><span style="color: white;">Contact Us</span></a>
-         <!-- 前往後台管理清單 -->
-        <a href="index2.html" class=" mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-600"></i>
-          <span>後台管理清單</span>
-        </a>
+  <header>
+    <div class="container nav">
+  <a class="brand" href="#top" aria-label="創智科研生技首頁"><img class="brand-logo" src="./img/innovmind-logo.png" alt="創智科研生技有限公司 InnovMind Bioscience Co., Ltd."></a>
+  <button type="button" class="menu-btn" aria-label="開啟選單" aria-expanded="false" aria-controls="navLinks" id="menuBtn">☰</button>
+  <nav class="nav-links" id="navLinks">
+    <a href="#about">關於我們</a>
+    <a href="#vision">企業願景</a>
+    <a href="#focus">核心發展方向</a>
+    <a href="#mission">我們的使命</a>
+    <a class="contact-link" href="#formCard">聯絡我們　↗</a>
+    <a href="index2.html">後台管理清單</a>
 
         <!-- 連線狀態 -->
         <span id="connectionBadge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
           <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-amber-500 animate-pulse"></span>
           連線檢查中
-        </span>
-      </nav>
-    </div>
+        </span> 
+  </nav>
+  </div>
   </header>
-
-   <main>
-    <section class="hero sectionA" id="home">
-      <div class="hero-grid"></div>
-      <div class="container hero-content">
-        <div class="hero-copy">
-       
-        </div>
-        <div class="hero-art" aria-label="腦部與超音波科技視覺">
-          
-          <div class="brain-visual"  style="padding-left:430px;padding-bottom: 90px;" >
-             <h1>智慧科技驅動醫療創新</h1>
-             <h2 style="color: white;line-height:56px;">&nbsp;&nbsp;Intelligent Technology for Better Healthcare</h1>
-          </div>
-          <div class="scan-beam"></div>
-        
-        </div>
-      </div>
-      <!-- <div class="hero-bottom-line"></div> -->
-    </section>
-
-    <section class="section sectionB" id="contact">
-      <div class="container">
-
-
-
-   
-
-    <div class="section-heading ">
-<div class="about-header ">
-    
-         <div class="brand-title">
-            <h2>關於我們</h2>
-            <p>About Us</p>
-        </div>
- </div>
-
-     <!-- 主要內容 -->
-    <div class="content-wrapper" style="padding-top: 20px;">
-
-        <!-- 左側公司介紹 -->
-        <div class="intro" >
-
-            <p class="indent" style="color: black !important;">
-                創智科研生技公司（InnovMind Bioscience Co., Ltd.）
-                致力於智慧醫療技術的研發與臨床應用，
-                以臨床需求為核心，結合人工智慧（AI）、
-                生物醫學工程及創新科技，推動新一代智慧醫療檢查與診斷技術的發展。
-            </p>
-
-            <p class="indent" style="color: black !important;">
-                我們相信，科技的價值不僅在於提升生活便利性，
-                更在於改善醫療檢查方式、提升診斷效率，
-                並為醫療人員與病患創造更安全、精準且便利的醫療環境。
-            </p>
-
-            <p class="indent" style="color: black !important;">
-                透過跨領域研究、技術整合及產學醫合作，
-                致力於將創新科技轉化為具有臨床實用價值的智慧醫療解決方案。
-            </p>
-
-        </div>
-
-        <!-- 右側四大資訊卡 -->
-        <div class="card-grid">
-
-            <div class="info-card">
-                <div class="icon">✧</div>
-                <h3>Mission</h3>
-                <p>
-                    以創新科技，<br>
-                    改善醫療健康照護
-                </p>
-            </div>
-
-            <div class="info-card">
-                <div class="icon">◎</div>
-                <h3>Vision</h3>
-                <p>
-                    成為全球領先的<br>
-                    智慧醫療平台
-                </p>
-            </div>
-
-            <div class="info-card">
-                <div class="icon">▤</div>
-                <h3>Milestones</h3>
-                <p>
-                    持續突破技術<br>
-                    創新研發里程碑
-                </p>
-            </div>
-
-            <div class="info-card">
-                <div class="icon">♧</div>
-                <h3>Team</h3>
-                <p>
-                    跨領域專業團隊<br>
-                    攜手同行
-                </p>
-            </div>
-
-        </div>
-
-    </div>
-
-
-      </div>
-    </section>
-  <section class="section sectionC" id="about">
-    
-      <div class="container">
-
-
-
-   
-
-    <div class="section-heading ">
-<div class="about-header">
-   
-         <div class="brand-title">
-            <h2>企業願景</h2>
-            <p>Our Vision</p>
-        </div>
- </div>
-
-     <!-- 主要內容 -->
-    <div class="content-wrapper" style="padding-top: 20px;">
-
-        <!-- 左側公司介紹 -->
-        <div class="intro" style="padding-left:100px;" >
-
-            <p class="indent" style="font-size:32px;padding-top: 20px;margin-left:1000px;font-weight: 500;color: #253885 !important;">
-                讓科技不僅便利生活，
-            </p>
-            
-            <p class="indent" style="font-size:32px;margin-left:100px;font-weight: 500; margin-top:-25px;color: #253885 !important;">
-               更能改善醫療、守護健康。
-            </p>
-
-            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;color: black !important;">
-                &nbsp;&nbsp;&nbsp;&nbsp;隨著人工智慧與科技持續發展，我們期望將先進技術
-            </p>
-	    <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
-		廣泛應用於醫療檢查、疾病診斷及臨床照護，突破傳統
-            </p>
-            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
-		醫療設備與檢查方式的限制，讓醫療服務朝向智慧化、
-            </p>
-            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
-		<span style="color:red;font-weight: 700;">精準化</span>、<span style="color:red;font-weight: 700;">非侵入化</span>及<span style="color:red;font-weight: 700;">便利化發展</span>。
-            </p>
-
- <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;color: black !important;">
-                &nbsp;&nbsp;&nbsp;&nbsp;我們的願景是讓創新醫療科技從大型醫療機構延伸至
-            </p>
-	    <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
-		急診、加護病房、基層醫療及居家照護，使更優質的醫
-            </p>
-            <p class="indent" style="font-size:14px;font-weight: 500;margin-left:120px;margin-top:-20px;color: black !important;">
-		療技術能夠服務更多需要的人。
-            </p>
-
-        </div>
-
-      <div class="sectionC-visual">
-
-                <img src="./img/C2.jpg"
-                     alt="AI智慧醫療與數位醫療科技">
-
-            </div>
-          
-        
-
-       
-    </div>
-
-
-      </div>
-    </section>
-
-
-  <section class="section sectionD" id="technology">
-      <div class="container">
-
-
-
-   
-
-    <div class="section-heading ">
-<div class="about-header ">
-    
-         <div class="brand-title">
-            <h2>核心發展方向</h2>
-            <p>Core Focus</p>
-        </div>
- </div>
-
-     <!-- 四大核心發展方向 -->
-        <div class="sectionD-content" style="padding-top: 25px;">
-
-            <div class="content-grid">
-
-                <!-- 1 AI智慧醫療 -->
-                <div class="focus-item">
-
-                    <div class="focus-image">
-                        <img src="./img/D-2-1.jpg" alt="AI智慧醫療">
-                    </div>
-
-                    <div class="focus-text">
-                        <h2>AI 智慧醫療</h2>
-                        <p>
-                            整合人工智慧與醫學影像分析，
-                            研發智慧化輔助檢查及診斷技術。
-                        </p>
-                    </div>
-
-                </div>
-
-                <!-- 2 創新醫療設備 -->
-                <div class="focus-item">
-
-                    <div class="focus-image">
-                        <img src="./img/D-2-2.jpg" alt="創新醫療設備">
-                    </div>
-
-                    <div class="focus-text">
-                        <h2>創新醫療設備</h2>
-                        <p>
-                            開發便利、可攜式及非侵入性的
-                            醫療檢測設備，提升臨床應用效率。
-                        </p>
-                    </div>
-
-                </div>
-
-                <!-- 3 精準醫療技術 -->
-                <div class="focus-item">
-
-                    <div class="focus-image">
-                        <img src="./img/D-2-3.jpg" alt="精準醫療技術">
-                    </div>
-
-                    <div class="focus-text">
-                        <h2>精準醫療技術</h2>
-                        <p>
-                            結合生理訊號、超音波與智慧演算法，
-                            探索新型態的醫療檢測方法。
-                        </p>
-                    </div>
-
-                </div>
-
-                <!-- 4 產學醫跨域合作 -->
-                <div class="focus-item">
-
-                    <div class="focus-image">
-                        <img src="./img/D-2-4.jpg" alt="產學醫跨域合作">
-                    </div>
-
-                    <div class="focus-text">
-                        <h2>產學醫跨域合作</h2>
-                        <p>
-                            串聯臨床醫療、學術研究與科技產業，
-                            促進創新技術驗證及成果轉譯。
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-      </div>
-    </section>
-
-
-  <section class="section sectionE" id="portfolio">
-      <div class="container">
-
-
-
-   
-
-    <div class="section-heading ">
-<div class="about-header">
-    
-         <div class="brand-title">
-            <h2>我們的使命</h2>
-            <p>Our Mission</p>
-        </div>
- </div>
-
- 
-
-   <!-- ==============================
-             主要內容：使命介紹 + 主視覺
-        =============================== -->
-        <div class="sectionE-main">
-
-            <!-- 左側使命文字 -->
-            <div class="sectionE-description">
-
-                <p>
-                    以臨床需求為起點，以創新科技為動力，
-                    持續研發能夠改善醫療流程、提升診斷品質
-                    及增加醫療可近性的智慧醫療技術，
-                    讓科技創新真正落實於臨床照護。
-                </p>
-
-            </div>
-
-
-            <!-- 右側主視覺圖片 -->
-            <div class="sectionE-visual">
-
-                <img src="./img/E1-2.jpg"
-                     alt="AI智慧醫療與數位醫療科技">
-
-            </div>
-
-        </div>
-
-
-        <!-- ==============================
-             底部品牌標語
-        =============================== -->
-        <div class="sectionE-slogan">
-
-            <h1>
-                科技讓生活更便利，創新讓醫療更精準。
-            </h1>
-
-            <p>
-                Innovation Beyond Technology,
-                Advancing Healthcare.
-            </p>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <section class="section contact-section1" id="formCard">
-    
-      <div class="container">
-   <!-- 未設定 Supabase Key 時的提示橫幅 -->
+  <main id="top">
+  <section class="hero"><div class="container hero-inner"><div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="orbit two"></div><div class="orb"><div class="orb-core">✧</div></div><i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i></div><div class="hero-copy"><h1>智慧科技驅動<br>醫療創新</h1><div class="hero-en">Intelligent Technology for Better Healthcare</div><a class="hero-cta" href="#about">認識創智科研 <span>→</span></a></div></div></section>
+  <section id="about"><div class="container about-grid"><div class="copy"><div class="eyebrow">About Us</div><h2 class="section-title">關於我們</h2><p style="margin-top:25px">創智科研生技有限公司（InnovMind Bioscience Co., Ltd.）致力於智慧醫療技術的研發與應用，以臨床需求為核心，結合人工智慧（AI）、生物醫學工程與創新科技，推動新一代智慧醫療檢查與診斷技術的發展。</p><p>我們相信，科技的價值不僅在於提升便利性，更在於改善醫療檢查方式、提升診斷效率，並為醫療人員與病患創造更安全、精準且便利的醫療環境。</p><p>透過跨領域研究、技術整合及產學合作，創智科研持續探索科技化且具臨床實用價值的智慧醫療解決方案。</p></div><div class="principles"><div class="principle"><span class="symbol">⌘</span><div><b>智慧科技</b><br><small>SMART TECHNOLOGY</small></div></div><div class="principle"><span class="symbol">◎</span><div><b>臨床導向</b><br><small>CLINICAL-DRIVEN</small></div></div><div class="principle"><span class="symbol">⌁</span><div><b>創新研發</b><br><small>INNOVATION & R&D</small></div></div><div class="principle"><span class="symbol">◇</span><div><b>跨域合作</b><br><small>CROSS-DISCIPLINARY</small></div></div></div></div></section>
+  <section class="vision" id="vision"><div class="container vision-grid"><div class="vision-copy"><div class="eyebrow">Our Vision</div><h2 class="section-title">企業願景</h2><h3 class="vision-quote">讓科技不僅便利生活，<br>更能改善醫療、守護健康。</h3><p>以智慧科技與跨領域研發，發展創新醫療應用，突破傳統檢查與診斷的限制，讓醫療流程更有效率、資訊更清晰、判斷更有依據。</p><p>我們期望與醫療機構、學術研究單位及產業夥伴攜手，讓創新技術真正走進臨床，創造更值得信賴的醫療體驗。</p></div><div class="vision-visual" role="img" aria-label="醫療科技應用情境"></div></div></section>
+  <section id="focus"><div class="container"><div class="section-head"><div class="eyebrow">Core Focus</div><h2 class="section-title">核心發展方向</h2><div class="section-sub">從臨床需求出發，打造智慧醫療新可能</div></div><div class="focus-cards">
+  <article class="focus-card"><div class="focus-img"><img src="./img/focus-01.jpg" alt="醫療影像檢視"></div><div><span class="focus-no">01 / INTELLIGENCE</span><h3>AI 智慧醫療</h3><p>整合人工智慧與醫療影像分析，研發智慧化輔助技術，提升判讀效率與應用價值。</p></div></article>
+  <article class="focus-card"><div class="focus-img"><img src="./img/focus-02.jpg" alt="醫療設備與臨床應用"></div><div><span class="focus-no">02 / INNOVATION</span><h3>創新醫療設備</h3><p>開發兼具可行性與使用需求的醫療檢查設備，促進臨床應用與技術升級。</p></div></article>
+  <article class="focus-card"><div class="focus-img"><img src="./img/focus-03.jpg" alt="超音波醫療影像"></div><div><span class="focus-no">03 / PRECISION</span><h3>精準醫療技術</h3><p>結合生醫工程、超音波與智慧演算法，探索更精準、直覺且具臨床效益的檢查技術。</p></div></article>
+  <article class="focus-card"><div class="focus-img"><img src="./img/focus-04.jpg" alt="跨領域研究合作" onerror="this.style.display='none'"></div><div><span class="focus-no">04 / COLLABORATION</span><h3>產學醫跨域合作</h3><p>串聯醫療臨床、學術研究與科技產業，促進創新技術驗證與成果轉譯。</p></div></article>
+  </div></div></section>
+  <section class="mission" id="mission"><div class="container mission-grid"><div><div class="eyebrow">Our Mission</div><h2 class="section-title">我們的使命</h2><h3 class="vision-quote">科技讓生活更便利，<br>創新讓醫療更精準。</h3><p class="copy" style="font-size:14px;color:#53677b">以臨床需求為起點，以創新科技為動力，持續研發能夠改善醫療流程、提升診斷品質與應用可近性的智慧醫療技術，讓創新真正回應醫療現場的需求。</p><div class="mission-line">Innovation Beyond Technology, Advancing Healthcare.</div></div><div class="mission-visual" role="img" aria-label="智慧醫療與醫療影像科技"></div></div></section>
+  <section class="contact" id="formCard">
+    <div class="container contact-grid">
+       <!-- 未設定 Supabase Key 時的提示橫幅 -->
     <div id="keyNotice" class="hidden mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-3">
       <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0"></i>
       <div class="text-sm">
@@ -448,62 +573,20 @@
         </p>
       </div>
     </div>
-
     <!-- 訊息提示通知 -->
     <div id="toast" class="hidden fixed bottom-6 right-6 z-50 transition-all duration-300 transform translate-y-2 opacity-0"></div>
-
-        <div class="contact-panel1">
-       
-          <div class="contact-intro">
-            <span class="eyebrow">LET'S CONNECT</span><h2>聯絡我們</h2><h3>Contact Us</h3>
-            <p>與我們攜手，共同開創智慧醫療的未來。</p>
-            <div class="partnership"><b>技術合作</b><small>Technology Partnership</small><p>合作研發、醫療應用與 AI 技術交流，歡迎與我們聯繫。</p></div>
-          </div>
-          <form class="contact-form" id="contact-form">
-            <div>
-          <label for="name" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-            您的姓名
-          </label>
-          <div class="relative">
-            
-            <input type="text" id="name" name="name" required placeholder="例：王小明">
-          </div>
-          </div>
-          <div>
-            <label for="email" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-              電子郵件 
-            </label>
-            <div class="relative">
-             
-              <input type="email" id="email" name="email" required placeholder="name@example.com">
-            </div>
-          </div>
-          <div>
-            <label for="phone" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-              聯絡電話
-            </label>
-            <div class="relative">
-              
-              <input type="tel" id="phone" name="phone" placeholder="0912-345-678" required>
-            </div>
-          </div>
-          <div>
-          <label for="subject" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-            主旨 / 諮詢項目
-          </label>
-          <div class="relative">
-            
-            <input type="text" id="subject" name="subject" placeholder="例：專案合作諮詢、系統功能詢問" required>
-          </div>
-        </div>
-
-            <div>
+      <div><div class="eyebrow">Let's Connect</div><h2>聯絡我們</h2><div class="section-sub" style="color:#9dbbd4">Contact Us</div><p>歡迎與我們聯繫，洽談技術合作、研究交流及智慧醫療應用。</p><p>讓我們一起探索科技與醫療的更多可能。</p></div>
+      <form class="contact-form" id="contact-form">
+        <div class="field"><label for="name">姓名 / Name *</label><input id="name" name="name" required required placeholder="請輸入您的姓名"></div>
+        <div class="field"><label for="org">聯絡電話</label><input id="phone" name="phone" placeholder="聯絡電話"></div>
+        <div class="field"><label for="email">電子郵件 / Email *</label><input id="email" name="email" type="email" required placeholder="name@example.com"></div>
+        <div class="field"><label for="topic">主旨 / 諮詢項目</label> <input type="text" id="subject" name="subject" placeholder="例：專案合作諮詢、系統功能詢問" required></div>
+             <div class="field">
           <label for="message" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
             訊息內容 
           </label>
           <textarea id="message" name="message" rows="5" required placeholder="請詳細描述您的需求或想諮詢的事項..."></textarea>
         </div>
-
         <!-- 錯誤警示提示區 (如 RLS 權限問題) -->
         <div id="formErrorAlert" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs space-y-1.5">
           <div class="flex items-center gap-1.5 font-semibold text-rose-800">
@@ -512,18 +595,12 @@
           </div>
           <p id="formErrorMessage" class="text-rose-700 leading-relaxed"></p>
         </div>
-
-        <!-- 提交按鈕 -->
-        <button class="button button-primary" type="submit" id="submitBtn">
-          <span>確認送出訊息</span>
-        </button>
-
-          </form>
-          <aside class="contact-info"><b>聯絡資訊</b><small>Contact Info</small><p>✉　info@neurotech.com</p><p>⌖　台灣・Taiwan</p><p>◷　週一至週五 09:00–18:00</p><div class="socials"><a href="#contact" aria-label="LinkedIn">in</a><a href="#contact" aria-label="YouTube">▶</a></div></aside>
-        </div>
-      </div>
-    </section>
-    <!-- 狀態二：送出成功畫面 (預設隱藏) -->
+<button class="submit" type="submit" id="submitBtn">送出訊息　→</button>
+        <!-- <button class="button button-primary" type="submit" id="submitBtn"></button> -->
+        <div class="form-note" id="formNote">此為網站前端展示表單；正式上線前需串接電子郵件或表單服務，才能實際接收訊息。</div>
+      </form>
+    </div></section>
+ <!-- 狀態二：送出成功畫面 (預設隱藏) -->
    <section id="successCard" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-8 sm:p-12 text-center space-y-5">
     
       <div class="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
@@ -546,19 +623,13 @@
       </div>
     </section>
 
-  </main>
 
+</main>
+
+  
 
   <!-- 頁尾 -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="brand" href="#home" aria-label="創智科研生技首頁">
-        <img src="./img/F-LOGO-W.png" style="height: 45px;padding-left: 5px;" />
-      </a>
-      
-      <p style="color: white;">© 2026 InnovMind Bioscience Co., Ltd. All Rights Reserved.</p><a href="#home" style="color: white;">BACK TO TOP ↑</a></div>
-  </footer>
-
+<footer><div class="container footer-inner"><div class="footer-brand"><img class="footer-logo" src="./img/innovmind-logo.png" alt="創智科研生技有限公司 InnovMind Bioscience Co., Ltd."></div><div class="copyright">© 2026 InnovMind Bioscience. All Rights Reserved.</div></div></footer>
 
   <!-- ============================================================== -->
   <!-- 腳本邏輯與 Supabase 初始化設定 -->
@@ -789,92 +860,77 @@ CREATE POLICY "允許公開新增" ON "public"."contact_messages" FOR INSERT TO 
     }
 });
 // =========================================
-// 手機版漢堡選單控制
-// =========================================
+    // RWD 手機 / 平板漢堡選單
+    // HTML 實際使用 #menuBtn 與 #navLinks
+    // =========================================
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuToggle = document.getElementById('menuBtn');
+      const mainNav = document.getElementById('navLinks');
 
-document.addEventListener('DOMContentLoaded', function () {
+      if (!menuToggle || !mainNav) {
+        console.warn('找不到手機選單必要元素：#menuBtn 或 #navLinks');
+        return;
+      }
 
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
+      function closeMenu() {
+        mainNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', '開啟選單');
+        menuToggle.textContent = '☰';
+      }
 
-    if (!menuToggle || !mainNav) return;
+      function openMenu() {
+        mainNav.classList.add('open');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        menuToggle.setAttribute('aria-label', '關閉選單');
+        menuToggle.textContent = '✕';
+      }
 
-    // 開啟 / 關閉選單
-    menuToggle.addEventListener('click', function (e) {
+      menuToggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-        e.preventDefault();
-        e.stopPropagation();
+        const isOpen = mainNav.classList.contains('open');
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
 
-        const isOpen = mainNav.classList.toggle('is-open');
-
-        // 更新按鈕狀態
-        menuToggle.setAttribute('aria-expanded', isOpen);
-
-        // 切換圖示
-        menuToggle.innerHTML = isOpen ? '✕' : '☰';
-
-        menuToggle.setAttribute(
-            'aria-label',
-            isOpen ? '關閉選單' : '開啟選單'
-        );
-
-    });
-
-    // 點擊導覽連結後自動關閉選單
-    mainNav.querySelectorAll('a').forEach(function (link) {
-
+      // 點選導覽連結後關閉選單
+      mainNav.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function () {
-
-            mainNav.classList.remove('is-open');
-
-            menuToggle.setAttribute('aria-expanded', 'false');
-
-            menuToggle.innerHTML = '☰';
-
-            menuToggle.setAttribute('aria-label', '開啟選單');
-
+          closeMenu();
         });
+      });
 
-    });
-
-    // 點擊選單以外的地方，自動關閉
-    document.addEventListener('click', function (e) {
-
+      // 點選選單外部關閉
+      document.addEventListener('click', function (event) {
         if (
-            !mainNav.contains(e.target) &&
-            !menuToggle.contains(e.target)
+          mainNav.classList.contains('open') &&
+          !mainNav.contains(event.target) &&
+          !menuToggle.contains(event.target)
         ) {
-
-            mainNav.classList.remove('is-open');
-
-            menuToggle.setAttribute('aria-expanded', 'false');
-
-            menuToggle.innerHTML = '☰';
-
-            menuToggle.setAttribute('aria-label', '開啟選單');
-
+          closeMenu();
         }
+      });
 
+      // ESC 關閉選單
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeMenu();
+        }
+      });
+
+      // 回到桌機寬度時清除手機選單狀態
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) {
+          closeMenu();
+        }
+      });
     });
 
-    // 按 ESC 關閉選單
-    document.addEventListener('keydown', function (e) {
-
-        if (e.key === 'Escape') {
-
-            mainNav.classList.remove('is-open');
-
-            menuToggle.setAttribute('aria-expanded', 'false');
-
-            menuToggle.innerHTML = '☰';
-
-            menuToggle.setAttribute('aria-label', '開啟選單');
-
-        }
-
-    });
-
-});
     // 頁面載入時初始化
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
